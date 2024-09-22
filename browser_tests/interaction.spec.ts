@@ -389,4 +389,13 @@ test.describe('Load workflow', () => {
     await comfyPage.loadWorkflow('string_node_id')
     await expect(comfyPage.canvas).toHaveScreenshot('string_node_id.png')
   })
+
+  test('A workflow can be loaded multiple times in a row', async ({
+    comfyPage
+  }) => {
+    await comfyPage.loadWorkflow('single_ksampler')
+    await comfyPage.menu.workflowsTab.newBlankWorkflowButton.click()
+    await comfyPage.loadWorkflow('single_ksampler')
+    expect(await comfyPage.getGraphNodesCount()).toBe(1)
+  })
 })
